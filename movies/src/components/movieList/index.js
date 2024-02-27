@@ -10,5 +10,4 @@ const MovieList = (props) => {
   ));
   return movieCards;
 };
-
 export default MovieList;
