@@ -11,6 +11,8 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 
 
+
+
 const root = {
     display: "flex",
     justifyContent: "center",
@@ -21,10 +23,9 @@ const root = {
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ( props) => {
-  const movie = props.movie
-  const MovieDetails = ({ movie }) => {  // Don't miss this!
-    const [drawerOpen, setDrawerOpen] = useState(false);
+const MovieDetails = ({ movie }) => {  // Don't miss this!
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -60,6 +61,8 @@ const MovieDetails = ( props) => {
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
+      
+
       <Fab
         color="secondary"
         variant="extended"
@@ -75,7 +78,7 @@ const MovieDetails = ( props) => {
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
-      </Drawer>     
+      </Drawer>
       </>
   );
 };
