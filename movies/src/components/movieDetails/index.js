@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import Chip from "@mui/material/Chip";
@@ -10,21 +10,35 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 
-
-
-
 const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: 1.5,
+  margin: 0,
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {  // Don't miss this!
+const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [credits, setCredits] = useState([]);
+
+  useEffect(() => {
+    const fetchCredits = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        const data = await response.json();
+        setCredits(data.cast);
+      } catch (error) {
+        console.error('Error fetching credits:', error);
+      }
+    };
+
+    fetchCredits();
+  }, [movie.id]);
 
   return (
     <>
@@ -57,16 +71,35 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         />
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
+          label={`${movie.vote_average} (${movie.vote_count})`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
       
 
+      <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+      <Typography  variant="h5" component="h3">Credits </Typography>
+        
+</div>
+
+
+<div style={{  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+  {credits.map((person) => ( // Mapping over each person in the credits array
+    person.profile_path && ( // Conditional rendering: check if person has a profile photo
+      <div key={person.id} style={{ padding: '10px' }}> {/* Render a div for each person */}
+        <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} /> {/* Render the person's profile photo */}
+        <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.character}</p> {/* Render the character name (bold) */}
+        <p style={{  marginBottom: '5px' }}>{person.name}</p> {/* Render the actor's name */}
+      </div>
+    )
+  ))}
+</div>
+
+
       <Fab
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={{
           position: 'fixed',
           bottom: '1em',
@@ -79,7 +112,8 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-      </>
+    </>
   );
 };
-export default MovieDetails ;
+
+export default MovieDetails;
