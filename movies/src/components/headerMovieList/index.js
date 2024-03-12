@@ -15,7 +15,9 @@ const Header = (props ) => {
       sx={{
         display: "flex",
         justifyContent: "space-around",
+        padding: "20px",
         flexWrap: "wrap",
+        marginTop: 1.5,
         marginBottom: 1.5,
         backgroundColor: "#BBE0FF",
         color: "white",
