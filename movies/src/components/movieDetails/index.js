@@ -9,6 +9,7 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const root = {
   display: "flex",
@@ -86,11 +87,16 @@ const MovieDetails = ({ movie }) => {
 <div style={{  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
   {credits.map((person) => ( // Mapping over each person in the credits array
     person.profile_path && ( // Conditional rendering: check if person has a profile photo
+
+   
       <div key={person.id} style={{ padding: '10px' }}> {/* Render a div for each person */}
+         <Link to={`/actors/${person.id}`}>
         <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} /> {/* Render the person's profile photo */}
+        </Link>        
         <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.character}</p> {/* Render the character name (bold) */}
         <p style={{  marginBottom: '5px' }}>{person.name}</p> {/* Render the actor's name */}
       </div>
+      
     )
   ))}
 </div>
