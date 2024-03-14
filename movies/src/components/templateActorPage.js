@@ -1,73 +1,16 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { getActor } from "../api/tmdb-api";
-import { useQuery } from "react-query";
-import Spinner from '../components/spinner';
+// import React from "react";
+// import { useParams } from "react-router-dom";
+// import TemplateActorPage from "../components/templateActorPage";
+// import { getActor } from "../api/tmdb-api";
+// import { useQuery } from "react-query";
+// import Spinner from '../components/spinner';
 
-const TemplateActorPage = ({ person }) => {
-  console.log("Actor data:", person); // Log the person prop
+// const ActorPage = () => {
+//   const { id } = useParams(); // Extract actor ID from URL parameters
 
-  const { data , error, isLoading, isError } = useQuery(
-    ["actorImages", { id: person.id }],
-    getActor
-  );
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  };
-
-  const images = data.profiles;
-
-  return (
-    <>
-      <Grid container spacing={5} sx={{ padding: "15px" }}>
-        <Grid item xs={3}>
-          <div sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-          }}>
-            <ImageList cols={1}>
-              {images.map((image) => (
-                <ImageListItem key={image.file_path} cols={1}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                    alt={image.file_path}
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </div>
-        </Grid>
-
-        <Grid item xs={9}>
-          {/* Actor Header Section */}
-          <div>
-            <h1>{person.name}</h1>
-            <p>{person.biography}</p>
-            {/* Add more actor header information here */}
-          </div>
-
-          {/* Add more actor information here if needed */}
-        </Grid>
-      </Grid>
-    </>
-  );
-};
-
-export default TemplateActorPage;
-
-
-// const TemplateActorPage = ({ person }) => {
-//   const { data , error, isLoading, isError } = useQuery(
-//     ["actorImages", { id: person.id }],
-//     getActor
+//   const { data, error, isLoading, isError } = useQuery(
+//     ["actor", { id }],
+//     () => getActor(id)
 //   );
 
 //   if (isLoading) {
@@ -78,44 +21,20 @@ export default TemplateActorPage;
 //     return <h1>{error.message}</h1>;
 //   };
 
-//   const images = data.profiles;
+//   const actor = data;
 
-//   return (
-//     <>
-//       <Grid container spacing={5} sx={{ padding: "15px" }}>
-//         <Grid item xs={3}>
-//           <div sx={{
-//             display: "flex",
-//             flexWrap: "wrap",
-//             justifyContent: "space-around",
-//           }}>
-//             <ImageList cols={1}>
-//             {images && images.map((image) => (
-//   <ImageListItem key={image.file_path} cols={1}>
-//     <img
-//       src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-//       alt={image.file_path}
-//     />
-//   </ImageListItem>
-// ))}
+//   console.log("Actor data in ActorPage:", actor); // Log the actor data
 
-//             </ImageList>
-//           </div>
-//         </Grid>
+//   return ( 
+//   <><><TemplateActorPage person={actor} />
+//           <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0' }}>{person.character}</p>
+//       </><p style={{ marginBottom: '5px' }}>{person.name}</p></> {/* Render the actor's name */}
+    
 
-//         <Grid item xs={9}>
-//           {/* Actor Header Section */}
-//           <div>
-//             <h1>{person.name}</h1>
-//             <p>{person.biography}</p>
-//             {/* Add more actor header information here */}
-//           </div>
 
-//           {/* Add more actor information here if needed */}
-//         </Grid>
-//       </Grid>
-//     </>
-//   );
+  
+//   )
+//   ; // Pass actor data to TemplateActorPage
 // };
 
-// export default TemplateActorPage;
+// export default ActorPage;
