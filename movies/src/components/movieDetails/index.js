@@ -9,7 +9,6 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 
 const root = {
@@ -21,19 +20,32 @@ const root = {
   margin: 0,
 };
 const chip = { margin: 0.5 };
-
 const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [credits, setCredits] = useState([]);
+  const [cast, setCast] = useState([]); // Added state for cast
+  const [crew, setCrew] = useState([]); // Added state for crew
 
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-        );
-        const data = await response.json();
-        setCredits(data.cast);
+        // Fetching cast data from TMDB API
+const responseCast = await fetch(
+  `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+);
+const dataCast = await responseCast.json();
+setCast(dataCast.cast); // Setting cast data to state
+
+// Fetching crew data from TMDB API (same endpoint as cast)
+const responseCrew = await fetch(
+  `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+);
+const dataCrew = await responseCrew.json();
+setCrew(dataCrew.crew); // Setting crew data to state
+
+//they are fetched from the same TMDB API endpoint but stored in separate state variables (cast and crew).
+
+
+        setCrew(dataCrew.crew);
       } catch (error) {
         console.error('Error fetching credits:', error);
       }
@@ -79,28 +91,44 @@ const MovieDetails = ({ movie }) => {
       </Paper>
       
 
+         {/* Section for displaying Cast */}
+         <br></br>
+        <Typography variant="h5" component="h3">Cast </Typography>
       <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
-      <Typography  variant="h5" component="h3">Credits </Typography>
-        
-</div>
 
-
-<div style={{  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
-  {credits.map((person) => ( // Mapping over each person in the credits array
-    person.profile_path && ( // Conditional rendering: check if person has a profile photo
-
-   
-      <div key={person.id} style={{ padding: '10px' }}> {/* Render a div for each person */}
-         <Link to={`/actors/${person.id}`}>
-        <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} /> {/* Render the person's profile photo */}
-        </Link>        
-        <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.character}</p> {/* Render the character name (bold) */}
-        <p style={{  marginBottom: '5px' }}>{person.name}</p> {/* Render the actor's name */}
+        {/* Mapping over each cast member */}
+        {cast.map((person) => (
+          person.profile_path && (  // Conditional rendering: check if cast member has a profile photo
+            <div key={person.id} style={{ padding: '10px' }}>
+              {/* Render the cast member's profile photo */}
+                <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} />
+               {/* Render the character name (bold) */}
+              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.character}</p>
+              {/* Render the actor's name */}
+              <p style={{  marginBottom: '5px' }}>{person.name}</p>
+            </div>
+          )
+        ))}
       </div>
-      
-    )
-  ))}
-</div>
+
+      <br />
+
+        {/* Section for displaying Crew - pretty much the same as the previous one but shows crew instead*/}
+        <Typography  variant="h5" component="h3">Crew </Typography>
+      <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+
+        {crew.map((person) => (
+          person.profile_path && (
+            <div key={person.id} style={{ padding: '10px' }}>
+             
+                <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} />
+              
+              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.job}</p>
+              <p style={{  marginBottom: '5px' }}>{person.name}</p>
+            </div>
+          )
+        ))}
+      </div>
 
 
       <Fab

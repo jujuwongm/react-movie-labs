@@ -1,0 +1,9 @@
+.movie-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .movie-link:hover {
+    color: purple;
+  }
+  
