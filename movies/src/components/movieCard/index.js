@@ -14,6 +14,21 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
+
+
+
+
 
 export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
@@ -43,6 +58,7 @@ export default function MovieCard({ movie, action }) {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
@@ -68,14 +84,32 @@ export default function MovieCard({ movie, action }) {
       />
 
       <CardContent>
-      {/* svg is for the percentage circle - substituting the current grading situation */ }
-          <svg height="100" width="100" style={{marginTop: "-60px", marginLeft: "-20px"}}>
-  <circle cx="50" cy="50" r="30" stroke="transparent" strokeWidth="4" fill={strokeColor} />
-  <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="4" fill="none" />
-  <text x="50%" y="50%" textAnchor="middle" stroke="black" strokeWidth="0.5" dy=".3em">
-    {percentage}%
-  </text>
-</svg>
+      {/* 
+    This SVG element is used to visually represent a percentage circle, which replaces the current grading system.
+  */}
+  <svg height="100" width="100" style={{marginTop: "-60px", marginLeft: "-20px"}}>
+    {/* 
+      This circle serves as the background of the percentage circle, filled with white color.
+    */}
+    <circle cx="50" cy="50" r="30" stroke="transparent" strokeWidth="4" fill="white" />
+    
+    {/* 
+      This circle represents the actual percentage circle, with a dynamic stroke color.
+      It appears as an outline due to the "none" fill attribute.
+    */}
+    <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="4" fill="none" />
+    
+    {/* 
+      This text element displays the percentage value at the center of the circle.
+      It uses the "montserrat" font for consistent styling and is positioned in the center.
+    */}
+    <text fontFamily="montserrat" x="50%" y="50%" textAnchor="middle" stroke="black" strokeWidth="0.5" dy=".3em">
+      {/* 
+        The percentage value dynamically changes based on the "percentage" variable.
+      */}
+      {percentage}%
+    </text>
+  </svg>
 
         <Grid container>
           <Grid item xs={6}>
@@ -101,5 +135,6 @@ export default function MovieCard({ movie, action }) {
         </Link>
       </CardActions>
     </Card>
+    </ThemeProvider>
   );
 }

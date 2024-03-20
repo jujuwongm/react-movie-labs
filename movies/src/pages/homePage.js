@@ -4,6 +4,20 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import Spinner from '../components/spinner';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
+
+
 
 const HomePage = () => {
   const { data, error, isLoading, isError } = useQuery('discover', getMovies)
@@ -26,11 +40,11 @@ const HomePage = () => {
   const addToFavorites = (movieId) => true 
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       {/* Hero Image */}
-      <div className="hero-image" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`, height: '90vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
-      <h3 className="hero-title" style={{paddingTop: '30vh', margin:'-10px' ,textAlign: 'center', fontSize: '7vh', color: 'white'}}> A movie recommendation for you: </h3>
-        <h1 className="hero-title" style={{ margin:'-10px' ,textAlign: 'center', fontSize: '17vh', color: 'white'}}> {heroMovie.title}</h1>
+      <div className="hero-image" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`, height: '80vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+      <h3 className="hero-title" style={{fontFamily: 'montserrat', paddingTop: '30vh', margin:'-10px' ,textAlign: 'center', fontSize: '7vh', color: 'white', fontWeight: '400'}}> A movie recommendation for you: </h3>
+        <h1 className="hero-title" style={{ margin:'-10px' ,textAlign: 'center',fontFamily: 'montserrat', fontSize: '17vh', color: 'white'}}> {heroMovie.title}</h1>
       </div>
 
       {/* Movie List */}
@@ -41,7 +55,7 @@ const HomePage = () => {
           return <AddToFavoritesIcon movie={movie} />
         }}
       />
-    </>
+    </ThemeProvider>
   );
 }
 

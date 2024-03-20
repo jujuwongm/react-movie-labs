@@ -7,6 +7,20 @@ import Spinner from '../components/spinner';
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
+
+
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
 
@@ -31,7 +45,7 @@ const FavoriteMoviesPage = () => {
     return q.data
   });
 
-  const toDo = () => true;
+
 
   return (
     <PageTemplate
@@ -39,10 +53,11 @@ const FavoriteMoviesPage = () => {
       movies={movies}
       action={(movie) => {
         return (
-          <>
+          <ThemeProvider theme={theme}>
             <RemoveFromFavorites movie={movie} />
             <WriteReview movie={movie} />
-          </>
+            </ThemeProvider>
+        
         );
       }}
     />

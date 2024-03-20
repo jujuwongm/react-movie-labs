@@ -19,8 +19,7 @@ const Header = (props ) => {
         flexWrap: "wrap",
         marginTop: 1.5,
         marginBottom: 1.5,
-        backgroundColor: "#BBE0FF",
-        color: "white",
+        color: "#0d253f",
       }}
       >
          <IconButton aria-label="go back" onClick={() => navigate(-1)}>

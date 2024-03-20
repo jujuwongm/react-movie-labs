@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
-import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
+import StarRateIcon from "@mui/icons-material/StarRate"; // Import StarRateIcon
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; // Import CalendarTodayIcon
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
 
 
 const root = {
@@ -19,9 +31,16 @@ const root = {
   listStyle: "none",
   padding: 1.5,
   margin: 0,
-  
 };
-const chip = { margin: 0.5 };
+
+
+
+const chip = { margin: 0.5, background:'#0d253f', color: 'white' };
+
+
+
+
+
 const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cast, setCast] = useState([]);
@@ -31,22 +50,17 @@ const MovieDetails = ({ movie }) => {
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-         // Fetching cast data from TMDB API
         const responseCast = await fetch(
           `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
         );
         const dataCast = await responseCast.json();
-        setCast(dataCast.cast); // Setting cast data to state
+        setCast(dataCast.cast);
 
-
-        // Fetching crew data from TMDB API (same endpoint as cast)
         const responseCrew = await fetch(
           `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
         );
         const dataCrew = await responseCrew.json();
-        setCrew(dataCrew.crew); // Setting crew data to state
-//they are fetched from the same TMDB API endpoint but stored in separate state variables (cast and crew).
-        
+        setCrew(dataCrew.crew);
 
         // Fetching movie recommendations
         const responseRecommendations = await fetch(
@@ -63,22 +77,21 @@ const MovieDetails = ({ movie }) => {
   }, [movie.id]);
 
   return (
-    <>
-      <Typography variant="h5" component="h3">
+    <ThemeProvider theme={theme}>
+      <Typography variant="h4" component="h3" sx={{ fontWeight: 500 }} >
         Overview
       </Typography>
 
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
+      <Typography variant="h6" component="p" sx={{ fontWeight: 400 }}>
+  {movie.overview}
+</Typography>
+
 
       <Paper 
         component="ul" 
         sx={{...root}}
       >
-        <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
-        </li>
+        
         {movie.genres.map((g) => (
           <li key={g.name}>
             <Chip label={g.name} sx={{...chip}} />
@@ -86,54 +99,61 @@ const MovieDetails = ({ movie }) => {
         ))}
       </Paper>
       <Paper component="ul" sx={{...root}}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+        <Chip icon={<AccessTimeIcon style={{ color: '#0d253f' }} />} label={`${movie.runtime} min.`} />
         <Chip
-          icon={<MonetizationIcon />}
+          icon={<MonetizationIcon style={{ color: '#0d253f' }} />}
           label={`${movie.revenue.toLocaleString()}`}
         />
         <Chip
-          icon={<StarRate />}
+          icon={<StarRateIcon style={{ color: '#0d253f' }} />} // Set color to #0d253f
           label={`${movie.vote_average} (${movie.vote_count})`}
         />
-        <Chip label={`Released: ${movie.release_date}`} />
+  <Chip icon={<CalendarTodayIcon style={{ color: '#0d253f' }} />} label={`Released: ${movie.release_date}`} /> {/* Add CalendarTodayIcon */}
       </Paper>
 
-      <Typography variant="h5" component="h3">Cast </Typography>
+
+      {/* CAST PICTURES, CHARACTER NAMES AND ACTOR NAMES*/}
+      <br></br>
+      <Typography variant="h5" component="h3" sx={{ fontWeight: 500 }}>Cast </Typography>
       <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {cast.map((person) => (
           person.profile_path && (
             <div key={person.id} style={{ padding: '10px' }}>
               <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} />
-              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.character}</p>
-              <p style={{  marginBottom: '5px' }}>{person.name}</p>
+              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0', fontFamily: 'montserrat'}}>{person.character}</p>
+              <p style={{  marginBottom: '5px', fontFamily: 'montserrat' }}>{person.name}</p>
             </div>
           )
         ))}
       </div>
 
-      <Typography  variant="h5" component="h3">Crew </Typography>
+      <Typography  variant="h5" component="h3" sx={{ fontWeight: 500 }}>Crew </Typography>
       <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {crew.map((person) => (
           person.profile_path && (
             <div key={person.id} style={{ padding: '10px' }}>
               <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: '100%', marginBottom: '10px' }} />
-              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0'}}>{person.job}</p>
-              <p style={{  marginBottom: '5px' }}>{person.name}</p>
+              <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0', fontFamily: 'montserrat'}}>{person.job}</p>
+              <p style={{  marginBottom: '5px', fontFamily: 'montserrat' }}>{person.name}</p>
             </div>
           )
         ))}
       </div>
 
-       {/* Section for displaying recommendations */}
-       <Typography variant="h5" component="h3">Recommendations</Typography>
-      <Slider > {/* Use the Slider component with settings */}
-        {recommendations.map((recommendation) => (
-          <div key={recommendation.id}>
-            <img src={`https://image.tmdb.org/t/p/w200${recommendation.poster_path}`} alt={recommendation.title} />
-            <p>{recommendation.title}</p>
-          </div>
-        ))}
-      </Slider>
+      {/* Section for displaying recommendations */}
+<Typography variant="h5" component="h3" sx={{ fontWeight: 500 }}>Recommendations</Typography>
+<div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+  {recommendations.map((recommendation) => (
+    <div key={recommendation.id} style={{ padding: '10px' }}>
+      <a href={`https://www.themoviedb.org/movie/${recommendation.id}`} target="_blank" rel="noopener noreferrer">
+        <img src={`https://image.tmdb.org/t/p/w200${recommendation.poster_path}`} alt={recommendation.title} style={{ width: '100%', marginBottom: '10px' }} />
+        </a>
+        <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0', fontFamily: 'montserrat'}}>{recommendation.title}</p>
+      
+    </div>
+  ))}
+</div>
+
 
       <Fab
         color="secondary"
@@ -151,7 +171,7 @@ const MovieDetails = ({ movie }) => {
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-    </>
+    </ThemeProvider>
   );
 };
 

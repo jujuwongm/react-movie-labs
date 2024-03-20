@@ -14,8 +14,6 @@ import Spinner from '../spinner';
 
 const formControl = 
   {
-    margin: 1,
-    minWidth: 220,
     backgroundColor: "rgb(255, 255, 255)"
   };
 
@@ -68,7 +66,7 @@ background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 10
 
         <TextField
   sx={{
-    width: '1000px', // Set width to 800px
+    width: '900px', // Set width to 800px
     ...formControl 
   }}
   id="filled-search"
@@ -80,8 +78,7 @@ background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 10
 />
 
 
-        <FormControl sx={{  width: '300px',
-          ...formControl}}>
+        <FormControl sx={{  width: '300px', marginLeft:'50px', ...formControl}}>
           <InputLabel id="genre-label">Genre</InputLabel>
 
 

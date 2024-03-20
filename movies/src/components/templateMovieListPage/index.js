@@ -24,7 +24,7 @@ function MovieListPageTemplate({ movies, title, action }) {
 
   return (
     
-      <Grid container sx={{ padding: '0px', backgroundColor: '#BBE0FF' }}> {/* Set grid background to pastel pink */}
+      <Grid container sx={{ padding: '0px', backgroundColor: 'white' }}> {/* Set grid background to pastel pink */}
         <Grid item xs={12} >
           <Header title={title}  /> 
           <FilterCard 
