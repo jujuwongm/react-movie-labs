@@ -9,6 +9,11 @@ create a hero image that slides with photos of different movies - directs to mov
 
 
 
+To be done:
+all the design bits
+add more filters 
+add the logo and make the filter less ugly
+
 
 # Getting Started with Create React App
 

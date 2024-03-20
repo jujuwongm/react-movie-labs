@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import Avatar from '@mui/material/Avatar';
 import Card from "@mui/material/Card";
@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
@@ -22,13 +21,26 @@ export default function MovieCard({ movie, action }) {
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
-    movie.favorite = false
+    movie.favorite = false;
   }
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     addToFavorites(movie);
   };
+
+  // Calculate the percentage based on the movie's vote_average
+  const percentage = Math.round((movie.vote_average / 10) * 100);
+
+  // Determine stroke color based on the percentage range
+  let strokeColor;
+  if (percentage < 55) {
+    strokeColor = 'red';
+  } else if (percentage >= 55 && percentage <= 70) {
+    strokeColor = 'yellow';
+  } else {
+    strokeColor = 'green';
+  }
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -54,7 +66,17 @@ export default function MovieCard({ movie, action }) {
             : img
         }
       />
+
       <CardContent>
+      {/* svg is for the percentage circle - substituting the current grading situation */ }
+          <svg height="100" width="100" style={{marginTop: "-60px", marginLeft: "-20px"}}>
+  <circle cx="50" cy="50" r="30" stroke="transparent" strokeWidth="4" fill={strokeColor} />
+  <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="4" fill="none" />
+  <text x="50%" y="50%" textAnchor="middle" stroke="black" strokeWidth="0.5" dy=".3em">
+    {percentage}%
+  </text>
+</svg>
+
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
