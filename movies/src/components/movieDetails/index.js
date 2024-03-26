@@ -50,28 +50,30 @@ const MovieDetails = ({ movie }) => {
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const responseCast = await fetch(
-          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-        );
-        const dataCast = await responseCast.json();
-        setCast(dataCast.cast);
+      // Fetch cast data from TMDB API
+      const responseCast = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+      );
+      const dataCast = await responseCast.json();  // Parse response to JSON
+      setCast(dataCast.cast);  // Update cast state
 
-        const responseCrew = await fetch(
-          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-        );
-        const dataCrew = await responseCrew.json();
-        setCrew(dataCrew.crew);
+      // Fetch crew data from TMDB API
+      const responseCrew = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+      );
+      const dataCrew = await responseCrew.json();  // Parse response to JSON
+      setCrew(dataCrew.crew);  // Update crew state
 
-        // Fetching movie recommendations
-        const responseRecommendations = await fetch(
-          `https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-        );
-        const dataRecommendations = await responseRecommendations.json();
-        setRecommendations(dataRecommendations.results);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+      // Fetch movie recommendations from TMDB API
+      const responseRecommendations = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+      );
+      const dataRecommendations = await responseRecommendations.json();  // Parse response to JSON
+      setRecommendations(dataRecommendations.results);  // Update recommendations state
+    } catch (error) {
+      console.error('Error fetching data:', error);  // Log error if fetching fails
+    }
+  };
 
     fetchCredits();
   }, [movie.id]);
