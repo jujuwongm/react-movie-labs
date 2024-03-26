@@ -18,7 +18,6 @@ const formControl =
   };
 
 export default function FilterMoviesCard(props) {
-
   const { data, error, isLoading, isError } = useQuery("genres", getGenres);
 
   if (isLoading) {
@@ -46,49 +45,47 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "genre", e.target.value);
   };
 
-
+  const handleYearChange = (e) => {
+    handleChange(e, "year", e.target.value);
+  };
 
   return (
     <Card 
       sx={{
         Width: 1000,
-background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 100%)',
+        background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 100%)',
       }} 
       variant="outlined">
-
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon padding='0 px' fontSize="large" />
           Filter
         </Typography>
 
-
-
+        {/* Existing TextField */}
         <TextField
-  sx={{
-    width: '900px', // Set width to 800px
-    ...formControl 
-  }}
-  id="filled-search"
-  label="Search for a movie..."
-  type="search"
-  variant="filled"
-  value={props.titleFilter}
-  onChange={handleTextChange}
-/>
+          sx={{
+            width: '500px',
+            ...formControl 
+          }}
+          id="filled-search"
+          label="Search for a movie..."
+          type="search"
+          variant="filled"
+          value={props.titleFilter}
+          onChange={handleTextChange}
+        />
 
-
+        {/* Existing FormControl for genre */}
         <FormControl sx={{  width: '300px', marginLeft:'50px', ...formControl}}>
           <InputLabel id="genre-label">Genre</InputLabel>
-
-
           <Select
-    labelId="genre-label"
-    id="genre-select"
-    defaultValue=""
-    value={props.genreFilter}
-    onChange={handleGenreChange}
-  >
+            labelId="genre-label"
+            id="genre-select"
+            defaultValue=""
+            value={props.genreFilter}
+            onChange={handleGenreChange}
+          >
             {genres.map((genre) => {
               return (
                 <MenuItem key={genre.id} value={genre.id}>
@@ -98,8 +95,22 @@ background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 10
             })}
           </Select>
         </FormControl>
+
+        {/* New TextField for year filter */}
+        <TextField
+          sx={{
+            width: '300px', 
+            marginLeft: '50px', 
+            ...formControl
+          }}
+          id="filled-year"
+          label="Release Year"
+          type="number"
+          variant="filled"
+          value={props.yearFilter}
+          onChange={handleYearChange}
+        />
       </CardContent>
-     
     </Card>
   );
 };
