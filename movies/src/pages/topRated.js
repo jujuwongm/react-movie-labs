@@ -4,6 +4,18 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
 
 const TopMovies = () => {
   const { data, error, isLoading, isError } = useQuery('top movies', top_rated);
@@ -20,6 +32,7 @@ const TopMovies = () => {
   const Rated = data.results;
   
   return (
+    <ThemeProvider theme={theme}>
     <>
       {/* Movie List */}
       <PageTemplate
@@ -30,6 +43,7 @@ const TopMovies = () => {
         }}
       />
     </>
+    </ThemeProvider>
   );
 }
 

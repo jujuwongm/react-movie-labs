@@ -11,6 +11,17 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+ 
+
+const themes = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Arial', // fallback font
+    ].join(','),
+  },
+});
 
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -42,6 +53,7 @@ const SiteHeader = ({ history }) => {
   };
 
   return (
+    <ThemeProvider theme={themes}>
     <>
       <AppBar style={{ background:'#0d253f', position:'fixed' }}  >
         
@@ -105,6 +117,7 @@ const SiteHeader = ({ history }) => {
       </AppBar>
       <Offset />
     </>
+    </ThemeProvider>
   );
 };
 

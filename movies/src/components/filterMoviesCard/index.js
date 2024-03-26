@@ -65,7 +65,7 @@ export default function FilterMoviesCard(props) {
         background: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 100%)',
       }} 
       variant="outlined">
-      <CardContent>
+      <CardContent >
         <Typography variant="h5" component="h1">
           <SearchIcon padding='0 px' fontSize="large" />
           Filter
