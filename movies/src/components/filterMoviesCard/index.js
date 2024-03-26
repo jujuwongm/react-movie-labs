@@ -49,6 +49,15 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "year", e.target.value);
   };
 
+  const handleRatingChange = (e) => {
+    const inputValue = e.target.value;
+    const regex = /^[0-9]$/; // Regex pattern to match only single digits
+    if (regex.test(inputValue)) {
+      handleChange(e, "rating", inputValue);
+    }
+  };
+  
+
   return (
     <Card 
       sx={{
@@ -65,7 +74,7 @@ export default function FilterMoviesCard(props) {
         {/* Existing TextField */}
         <TextField
           sx={{
-            width: '500px',
+            width: '400px',
             ...formControl 
           }}
           id="filled-search"
@@ -96,7 +105,7 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        {/* New TextField for year filter */}
+        {/* Existing TextField for year filter */}
         <TextField
           sx={{
             width: '300px', 
@@ -110,6 +119,24 @@ export default function FilterMoviesCard(props) {
           value={props.yearFilter}
           onChange={handleYearChange}
         />
+
+        {/* New TextField for rating filter */}
+        {/*Important to keep in mind that is based on the rating average, not the percentage circle*/}
+        <TextField
+  sx={{
+    width: '300px', 
+    marginLeft: '50px', 
+    ...formControl
+  }}
+  id="filled-rating"
+  label="Minimum Rating"
+  type="number" // Toggle and only numbers accepted 
+  variant="filled"
+  value={props.ratingFilter}
+  onChange={handleRatingChange}
+  inputProps={{ maxLength: 1 }} // Limit input to one character so the limit is 9
+/>
+
       </CardContent>
     </Card>
   );
