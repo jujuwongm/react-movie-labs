@@ -11,6 +11,9 @@ import Typography from "@mui/material/Typography";
 import StarRateIcon from "@mui/icons-material/StarRate"; // Import StarRateIcon
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; // Import CalendarTodayIcon
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+
  
 
 
@@ -46,6 +49,8 @@ const MovieDetails = ({ movie }) => {
   const [cast, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [trailerKey, setTrailerKey] = useState(null);
+
 
   useEffect(() => {
     const fetchCredits = async () => {
@@ -73,6 +78,15 @@ const MovieDetails = ({ movie }) => {
     } catch (error) {
       console.error('Error fetching data:', error);  // Log error if fetching fails
     }
+
+    const responseVideos = await fetch(
+      `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+    );
+    const dataVideos = await responseVideos.json();
+    if (dataVideos.results.length > 0 && dataVideos.results[0].type === "Trailer") {
+      setTrailerKey(dataVideos.results[0].key);
+    }
+    
   };
 
     fetchCredits();
@@ -113,6 +127,21 @@ const MovieDetails = ({ movie }) => {
   <Chip icon={<CalendarTodayIcon style={{ color: '#0d253f' }} />} label={`Released: ${movie.release_date}`} /> {/* Add CalendarTodayIcon */}
       </Paper>
 
+{/*Movie trailer*/}
+{trailerKey && (
+  <div style={{ marginTop: '20px' }}>
+    <iframe
+      width="560"
+      height="315"
+      src={`https://www.youtube.com/embed/${trailerKey}`}
+      title="Movie Trailer"
+      frameborder="0"
+      allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+)}
+
 
       {/* CAST PICTURES, CHARACTER NAMES AND ACTOR NAMES*/}
       <br></br>
@@ -142,19 +171,25 @@ const MovieDetails = ({ movie }) => {
         ))}
       </div>
 
-      {/* Section for displaying recommendations */}
+
+
+{/* Section for displaying recommendations */}
 <Typography variant="h5" component="h3" sx={{ fontWeight: 500 }}>Recommendations</Typography>
 <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
   {recommendations.map((recommendation) => (
     <div key={recommendation.id} style={{ padding: '10px' }}>
-      <a href={`https://www.themoviedb.org/movie/${recommendation.id}`} target="_blank" rel="noopener noreferrer">
+      <Link to={`/movies/${recommendation.id}`} target="_blank" rel="noopener noreferrer">
         <img src={`https://image.tmdb.org/t/p/w200${recommendation.poster_path}`} alt={recommendation.title} style={{ width: '100%', marginBottom: '10px' }} />
-        </a>
-        <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0', fontFamily: 'montserrat'}}>{recommendation.title}</p>
-      
+      </Link>
+      <p style={{ fontWeight: 'bold', marginBottom: '0', marginTop: '0', fontFamily: 'montserrat'}}>
+        <Link to={`/movies/${recommendation.id}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+          {recommendation.title}
+        </Link>
+      </p>
     </div>
   ))}
 </div>
+
 
 
       <Fab

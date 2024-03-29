@@ -27,16 +27,17 @@ const MovieHeader = (props) => {
 
 
 
-      
+      <div style={{fontFamily:'montserrat'}}>
       <Typography variant="h4" component="h3" sx={{ color: 'black' }}>
-      <a href={movie.homepage} style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.3s' }}>
+      <a href={movie.homepage} style={{ fontFamily:'montserrat',textDecoration: 'none', color: 'inherit', transition: 'color 0.3s' }}>
           {movie.title}
       </a>
 
         <br />
-        <span sx={{ fontSize: "1.5rem" }}>{`   "${movie.tagline}"`} </span>
+        
+        {/* // <span sx={{ fontSize: "1.5rem", fontFamily:"montserrat" }}>{`   "${movie.tagline}"`} </span> */}
       </Typography>
-
+      </div>
       <IconButton aria-label="go forward" onClick={() => navigate(+1) } >
         <ArrowForwardIcon color="primary" fontSize="large" />
       </IconButton>
