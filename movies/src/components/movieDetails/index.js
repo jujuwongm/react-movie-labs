@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
- 
+ //Changes and additions: Font montserrat all over, Cast - name, character name in bold, Crew - name, job in bold, Recommendations with poster - clicking on the poster or the name leads to a movie page within the app 
 
 
 const theme = createTheme({
@@ -49,48 +49,45 @@ const MovieDetails = ({ movie }) => {
   const [cast, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-  const [trailerKey, setTrailerKey] = useState(null);
+
 
 
   useEffect(() => {
+
     const fetchCredits = async () => {
       try {
-      // Fetch cast data from TMDB API
-      const responseCast = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-      );
-      const dataCast = await responseCast.json();  // Parse response to JSON
-      setCast(dataCast.cast);  // Update cast state
+        // Fetch cast data from TMDB API
+        const responseCast = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        const dataCast = await responseCast.json();  // Parse response to JSON
+        setCast(dataCast.cast);  // Update cast state
+  
+        // Fetch crew data from TMDB API
+        const responseCrew = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        const dataCrew = await responseCrew.json();  // Parse response to JSON
+        setCrew(dataCrew.crew);  // Update crew state
 
-      // Fetch crew data from TMDB API
-      const responseCrew = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-      );
-      const dataCrew = await responseCrew.json();  // Parse response to JSON
-      setCrew(dataCrew.crew);  // Update crew state
+        //they are fetched from the same TMDB API endpoint but stored in separate state variables (cast and crew).
 
-      // Fetch movie recommendations from TMDB API
-      const responseRecommendations = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
-      );
-      const dataRecommendations = await responseRecommendations.json();  // Parse response to JSON
-      setRecommendations(dataRecommendations.results);  // Update recommendations state
-    } catch (error) {
-      console.error('Error fetching data:', error);  // Log error if fetching fails
-    }
 
-    const responseVideos = await fetch(
-      `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
-    );
-    const dataVideos = await responseVideos.json();
-    if (dataVideos.results.length > 0 && dataVideos.results[0].type === "Trailer") {
-      setTrailerKey(dataVideos.results[0].key);
-    }
-    
-  };
-
+  
+        // Fetch movie recommendations from TMDB API
+        const responseRecommendations = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        const dataRecommendations = await responseRecommendations.json();  // Parse response to JSON
+        setRecommendations(dataRecommendations.results);  // Update recommendations state
+      } catch (error) {
+        console.error('Error fetching data:', error);  // Log error if fetching fails
+      }
+    };
+  
     fetchCredits();
   }, [movie.id]);
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -127,20 +124,6 @@ const MovieDetails = ({ movie }) => {
   <Chip icon={<CalendarTodayIcon style={{ color: '#0d253f' }} />} label={`Released: ${movie.release_date}`} /> {/* Add CalendarTodayIcon */}
       </Paper>
 
-{/*Movie trailer*/}
-{trailerKey && (
-  <div style={{ marginTop: '20px' }}>
-    <iframe
-      width="560"
-      height="315"
-      src={`https://www.youtube.com/embed/${trailerKey}`}
-      title="Movie Trailer"
-      frameborder="0"
-      allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-  </div>
-)}
 
 
       {/* CAST PICTURES, CHARACTER NAMES AND ACTOR NAMES*/}

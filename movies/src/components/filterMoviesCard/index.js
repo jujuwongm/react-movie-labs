@@ -12,6 +12,8 @@ import Select from "@mui/material/Select";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
 
+//Additions: change in the layout, turning it into an in-line design, background in gradient and font to montserrat && addition of the year filter and the rating filter (based on the vote count, not the percentage)
+
 const formControl = 
   {
     backgroundColor: "rgb(255, 255, 255)"
@@ -49,14 +51,18 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "year", e.target.value);
   };
 
-  const handleRatingChange = (e) => {
-    const inputValue = e.target.value;
-    const regex = /^[0-9]$/; // Regex pattern to match only single digits
-    if (regex.test(inputValue)) {
-      handleChange(e, "rating", inputValue);
-    }
-  };
-  
+
+const handleRatingChange = (e) => {
+  // Get the input value from the event
+  const inputValue = e.target.value;
+  // Regular expression pattern to match only single digits
+  const regex = /^[0-9]$/;
+  // Check if the input value matches the regex pattern
+  if (regex.test(inputValue)) {
+    // If it matches, call handleChange function with the event, "rating" as the field name, and the input value
+    handleChange(e, "rating", inputValue);
+  }
+};
 
   return (
     <Card 
@@ -71,7 +77,7 @@ export default function FilterMoviesCard(props) {
           Filter
         </Typography>
 
-        {/* Existing TextField */}
+        
         <TextField
           sx={{
             width: '400px',
@@ -85,7 +91,7 @@ export default function FilterMoviesCard(props) {
           onChange={handleTextChange}
         />
 
-        {/* Existing FormControl for genre */}
+        {/*FormControl for genre */}
         <FormControl sx={{  width: '300px', marginLeft:'50px', ...formControl}}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
@@ -105,7 +111,8 @@ export default function FilterMoviesCard(props) {
           </Select>
         </FormControl>
 
-        {/* Existing TextField for year filter */}
+        {/* Year filter */}
+      
         <TextField
           sx={{
             width: '300px', 
@@ -114,7 +121,7 @@ export default function FilterMoviesCard(props) {
           }}
           id="filled-year"
           label="Release Year"
-          type="number"
+          type="number" // numbers only for input
           variant="filled"
           value={props.yearFilter}
           onChange={handleYearChange}

@@ -5,7 +5,9 @@ import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import { useTheme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
+
+
+//As mentioned im filtermoviecard - layout change so movies are all inline and filter is above && pagination added (not enough movies for it to make sense but it works)
 
 function MovieListPageTemplate({ movies, title, action }) {
   const theme = useTheme();

@@ -1,20 +1,22 @@
+//This page assumes that the TMDB upcoming page would follow a chronological linear upcoming movie page - I do recognize that the current organisation shows movies from previous years, but it does the job well 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link component from React Router
+import { Link } from 'react-router-dom';
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Button, Grid } from 'semantic-ui-react'; // Import Semantic UI button and grid components
+import { Button, Grid, Container } from 'semantic-ui-react';
 
+// Create a theme with Montserrat font
 const theme = createTheme({
   typography: {
-    fontFamily: [
-      'Montserrat'
-    ].join(','),
+    fontFamily: 'Montserrat',
   },
 });
 
 const UpcomingMoviesCalendar = () => {
+  // State to store upcoming movies
   const [upcomingMovies, setUpcomingMovies] = useState([]);
 
+  // Fetch upcoming movies on component mount
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -28,46 +30,56 @@ const UpcomingMoviesCalendar = () => {
     fetchMovies();
   }, []);
 
-  // Organize movies by release date
-  const moviesByDate = upcomingMovies.reduce((acc, movie) => {
-    const releaseDate = new Date(movie.release_date).toLocaleDateString();
-    if (!acc[releaseDate]) {
-      acc[releaseDate] = [];
-    }
-    acc[releaseDate].push(movie);
+  // Organize movies by release year and month
+  const moviesByYearAndMonth = upcomingMovies.reduce((acc, movie) => {
+    const releaseYear = new Date(movie.release_date).getFullYear();
+    const releaseMonth = new Date(movie.release_date).getMonth();
+    // Group movies by release year and month
+    acc[releaseYear] = acc[releaseYear] || {};
+    acc[releaseYear][releaseMonth] = [...(acc[releaseYear][releaseMonth] || []), movie];
     return acc;
   }, {});
 
-  // Sort the keys of moviesByDate object
-  const sortedDates = Object.keys(moviesByDate).sort((a, b) => new Date(a) - new Date(b));
+  // Sort years in ascending order
+  const sortedYears = Object.keys(moviesByYearAndMonth).sort((a, b) => a - b);
 
   return (
+    // Apply theme with Montserrat font
     <ThemeProvider theme={theme}>
-      <div style={{ fontFamily: 'montserrat' }}>
-        <div className="container mx-auto" >
-          <h2 className="text-2xl font-semibold mb-4" style={{ paddingTop: "25px", fontFamily: "montserrat", textAlign: "center" }}>Upcoming Movies Calendar</h2>
-          <Grid columns={7}>
-            {sortedDates.map((date) => (
-              <Grid.Column key={date}>
-                <div className="border p-4" style={{ minHeight: "150px" }}>
-                  <p className="text-lg font-semibold mb-2">{date}</p>
-                  {/* Render movies for this date */}
-                  {moviesByDate[date].map((movie) => (
+      <Container style={{ fontFamily: 'Montserrat' }}>
+        {/* Display title */}
+        <h2 className="text-2xl font-semibold mb-4" style={{ paddingTop: "25px", textAlign: "center" }}>Upcoming Movies Calendar</h2>
+        {/* Display boxes for movie years */}
+        {sortedYears.map((year) => (
+          <div key={year}  style={{ marginBottom: "20px" }}>
+            <h3 className="text-lg font-semibold mb-2" style={{fontFamily:"montserrat"}}>{year}</h3>
+            {/* Display boxes for movie months */}
+            <div className="ui segments">
+              {Object.keys(moviesByYearAndMonth[year]).map((month) => (
+                <div key={month} className="ui segment" style={{ marginBottom: "10px" }}>
+                  <p className="text-base font-semibold mb-2">{new Date(0, month).toLocaleString('default', { month: 'long' })}</p>
+                  {/* Render movies for this month */}
+                  {moviesByYearAndMonth[year][month].map((movie) => (
                     <div key={movie.id} className="mb-2">
-                      <p>{movie.title}</p>
-                                           <Link to={`/movies/${movie.id}`}>
-                        <Button style={{ background: "#90cea1", color: "white", fontFamily: "montserrat" }}>
-                          Details
-                        </Button>
-                      </Link>
+                      {/* Display movie name and release date */}
+                      <p>
+                        <strong>{new Date(movie.release_date).toLocaleDateString()}</strong> - {movie.title}
+                        {/* Link to movie details */}
+                        <Link to={`/movies/${movie.id}`} style={{ marginLeft: "10px" }}>
+                          {/* Button for movie details */}
+                          <Button style={{ background: "#90cea1", color: "white", fontFamily: "Montserrat", padding: "-1" }}>
+                            Details
+                          </Button>
+                        </Link>
+                      </p>
                     </div>
                   ))}
                 </div>
-              </Grid.Column>
-            ))}
-          </Grid>
-        </div>
-      </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </Container>
     </ThemeProvider>
   );
 };

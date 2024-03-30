@@ -12,7 +12,9 @@ import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
- 
+
+// Changed font to montserrat, background colour changed, TMDB logo added and linked to main page
+// New pages added - upcoming, now playing, calendar, top rated
 
 const themes = createTheme({
   typography: {
@@ -22,7 +24,6 @@ const themes = createTheme({
     ].join(','),
   },
 });
-
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -42,8 +43,6 @@ const SiteHeader = ({ history }) => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Top Rated", path: "/movies/toprated" },
     { label: "Calendar", path: "/movies/calendar" },
-
-
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -56,16 +55,16 @@ const SiteHeader = ({ history }) => {
 
   return (
     <ThemeProvider theme={themes}>
-    <>
-      <AppBar style={{ background:'#0d253f', position:'fixed' }}  >
-        
-                <Toolbar>
-           <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" width="200" height="min" alt="logo"></img>
-          
-       
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Movies!
-          </Typography>
+      <>
+        <AppBar style={{ background:'#0d253f', position:'fixed' }}>
+          <Toolbar>
+           
+            <a href="/" style={{ marginRight: '20px', textDecoration: 'none' }}>
+              <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" width="200" height="auto" alt="logo" />
+            </a>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              All you ever wanted to know about Movies!
+            </Typography>
             {isMobile ? (
               <>
                 <IconButton
@@ -115,10 +114,10 @@ const SiteHeader = ({ history }) => {
                 ))}
               </>
             )}
-        </Toolbar>
-      </AppBar>
-      <Offset />
-    </>
+          </Toolbar>
+        </AppBar>
+        <Offset />
+      </>
     </ThemeProvider>
   );
 };

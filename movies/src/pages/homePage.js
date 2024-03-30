@@ -6,7 +6,7 @@ import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import Spinner from '../components/spinner';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
  
-
+// Additions: hero image - randomizer to show a different image 
 
 const theme = createTheme({
   typography: {
@@ -31,8 +31,10 @@ const HomePage = () => {
   }
 
   const movies = data.results;
-  const randomIndex = Math.floor(Math.random() * movies.length); // Generate a random index
-  const heroMovie = movies[randomIndex]; // Select the movie at the random index
+  // Generate a random index to select a hero movie
+  const randomIndex = Math.floor(Math.random() * movies.length);
+  // Select the hero movie at the random index
+  const heroMovie = movies[randomIndex];
 
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
@@ -43,6 +45,7 @@ const HomePage = () => {
     <ThemeProvider theme={theme}>
       {/* Hero Image */}
       <div className="hero-image" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`, height: '80vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+    {/* Hero Movie Title */}
       <h3 className="hero-title" style={{fontFamily: 'montserrat', paddingTop: '30vh', margin:'-10px' ,textAlign: 'center', fontSize: '7vh', color: 'white', fontWeight: '400'}}> A movie recommendation for you: </h3>
         <h1 className="hero-title" style={{ margin:'-10px' ,textAlign: 'center',fontFamily: 'montserrat', fontSize: '17vh', color: 'white'}}> {heroMovie.title}</h1>
       </div>

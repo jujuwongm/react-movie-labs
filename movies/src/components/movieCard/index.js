@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import Avatar from '@mui/material/Avatar';
 import Card from "@mui/material/Card";
@@ -6,7 +6,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
@@ -14,37 +13,25 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Button} from 'semantic-ui-react'; // Import Semantic UI button and grid components
+
+
+
+//Additions and changes: change font to montserrat, addition of the circle with the audience score of the movie - depending on the percentage the color of the stroke of the circle changes, changed button from MUI to SemanticUI one and the background is the TMDB gradient
 
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Montserrat',
-      'Arial', // fallback font
+      'Montserrat'
     ].join(','),
   },
 });
 
 export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
-  const [providers, setProviders] = useState([]);
 
   useEffect(() => {
-    async function fetchWatchProviders() {
-      try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/watch/providers?api_key=YOUR_API_KEY`);
-        const data = await response.json();
-        if (data.results) {
-          setProviders(data.results);
-        }
-      } catch (error) {
-        console.error("Error fetching watch providers:", error);
-      }
-    }
-
-    fetchWatchProviders();
-  }, [movie.id]);
-
-  if (favorites.find((id) => id === movie.id)) {
+     if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
     movie.favorite = false;
@@ -53,19 +40,19 @@ export default function MovieCard({ movie, action }) {
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     addToFavorites(movie);
-  };
+   }} );
 
-  // Calculate the percentage based on the movie's vote_average
-  const percentage = Math.round((movie.vote_average / 10) * 100);
+  // Calculate the percentage based on the movie's vote_average. The regular vote count is a number between 1 and 10, by multiplying by 10, it becomes a number between 10 and 100, and then a % is added
+  const percentage = Math.round(movie.vote_average * 10); 
 
   // Determine stroke color based on the percentage range
   let strokeColor;
-  if (percentage < 55) {
-    strokeColor = 'red';
-  } else if (percentage >= 55 && percentage <= 70) {
-    strokeColor = 'yellow';
+  if (percentage < 60) {
+    strokeColor = '#B2042F'; //green
+  } else if (percentage >= 60 && percentage <= 70) {
+    strokeColor = '#EDD300'; //yellow
   } else {
-    strokeColor = 'green';
+    strokeColor = '#90cea1'; //red
   }
 
   return (
@@ -95,41 +82,49 @@ export default function MovieCard({ movie, action }) {
         />
 
         <CardContent>
-          <svg height="100" width="100" style={{ marginTop: "-60px", marginLeft: "-20px" }}>
-            <circle cx="50" cy="50" r="30" stroke="transparent" strokeWidth="4" fill="white" />
-            <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="4" fill="none" />
-            <text fontFamily="montserrat" x="50%" y="50%" textAnchor="middle" stroke="black" strokeWidth="0.5" dy=".3em">
-              {percentage}%
-            </text>
-          </svg>
+        <svg height="100" width="100" style={{ marginTop: "-60px", marginLeft: "-20px" }}>
+  {/* First circle: Background white and no stroke*/}
+  <circle cx="50" cy="50" r="30" stroke="transparent" strokeWidth="4" fill="white" />
 
+  {/* Second circle: Percentage indicator colour, no fill and stroke color depends on the percentage */}
+  <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="4" fill="none" />
+
+  {/* Text to display the percentage */}
+  <text 
+    fontFamily="montserrat"  
+    x="50%" y="50%"  // Position the text at the center of the SVG
+    textAnchor="middle"  // Center-align the text horizontally
+    stroke="black" strokeWidth="0.5"  // Set stroke color
+    dy=".3em"  // Adjust vertical alignment
+  >
+    {percentage}%  {/* Display the percentage and add the % symbol */}
+  </text>
+</svg>
+
+{/* Movie release date */}
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={6} marginBottom={-2} marginTop={-1}> 
               <Typography variant="h6" component="p">
                 <CalendarIcon fontSize="small" />
                 {movie.release_date}
               </Typography>
             </Grid>
           </Grid>
-
-          {/* Display watch providers */}
-          <Grid container spacing={1} alignItems="center">
-            {providers.map(provider => (
-              <Grid item key={provider.provider_id}>
-                <a href={provider.link}>
-                  <img src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} alt={provider.provider_name} style={{ width: "30px", height: "auto" }} />
-                </a>
-              </Grid>
-            ))}
-          </Grid>
         </CardContent>
 
         <CardActions disableSpacing>
           {action(movie)}
           <Link to={`/movies/${movie.id}`}>
-            <Button variant="outlined" size="medium" color="primary">
-              More Info ...
-            </Button>
+          <Button
+  style={{
+    backgroundImage: 'linear-gradient(90deg, rgba(144,206,161,1) 0%, rgba(1,180,228,1) 100%)',
+    color: 'white', // Set text color
+    fontFamily: 'Montserrat', // Set font family
+    fontWeight: '500'
+  }}
+>
+  Details
+</Button>
           </Link>
         </CardActions>
       </Card>

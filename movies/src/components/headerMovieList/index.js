@@ -6,6 +6,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
+//Change colours of the arrows and changed font to montserrat
+
 const Header = (props ) => {
   const title = props.title
   const navigate = useNavigate();
@@ -20,10 +22,11 @@ const Header = (props ) => {
         marginTop: 1.5,
         marginBottom: 1.5,
         color: "#0d253f",
+        fontFamily: "montserrat"
       }}
       >
          <IconButton aria-label="go back" onClick={() => navigate(-1)}>
-        <ArrowBackIcon style={{ color: 'white' }} fontSize="large" />
+        <ArrowBackIcon style={{ color: '#90cea1' }} fontSize="large" />
       </IconButton>
 
       <Typography variant="h4" component="h3">
@@ -34,7 +37,7 @@ const Header = (props ) => {
         aria-label="go forward"
         
       >
-        <ArrowForwardIcon style={{ color: 'white' }} fontSize="large" />
+        <ArrowForwardIcon style={{ color: '#01b4e4' }} fontSize="large" />
       </IconButton>
     </Paper>
   );

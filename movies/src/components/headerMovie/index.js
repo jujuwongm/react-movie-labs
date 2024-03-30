@@ -6,6 +6,9 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
+//Changed font to montserrat, removed the House icon and turned the movie title into the link to the movie page
+
+
 const MovieHeader = (props) => {
   const movie = props.movie;
   const navigate = useNavigate();

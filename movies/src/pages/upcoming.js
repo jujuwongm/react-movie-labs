@@ -6,7 +6,7 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
  
-
+//new page
 
 const theme = createTheme({
   typography: {
