@@ -14,7 +14,7 @@ npm install - npm start - npm install semantic-ui-css semantic-ui-react
 - Student Number: 20095922
 
 ## Overview.
-The Movie app is an app that allows users to search for movies, see which ones are at the top of the ratings, and discover new ones. It also has a movie details page with details about the film, including its budget and genre, the cast and crew, and recommendations for related movies. Users can filter movies based on rating, genre, and year of release. Users can view upcoming movies in chronological order on the upcoming calendar page. Users can view ~~all Godfather movies~~ the top rated movies on TMDB.
+The Movie app is an app that allows users to search for movies, see which ones are at the top of the ratings, what's on the cinema, what's coming soon and discover new ones. It also has a movie details page with details about the film, including its budget and genre, the cast and crew, and recommendations for related movies. Users can filter movies based on rating, genre, and year of release. Users can view upcoming movies in chronological order on the upcoming calendar page. Users can view ~~all Godfather movies~~ the top rated movies on TMDB in the top rated page.
 
 ### Features.
 
