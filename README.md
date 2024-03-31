@@ -14,7 +14,7 @@ npm install - npm start - npm install semantic-ui-css semantic-ui-react
 - Student Number: 20095922
 
 ## Overview.
-This is the movie app 
+The Movie app is an app that allows users to search for movies, see which ones are at the top of the ratings, and discover new ones. It also has a movie details page with details about the film, including its budget and genre, the cast and crew, and recommendations for related movies. Users can filter movies based on rating, genre, and year of release. Users can view upcoming movies in chronological order on the upcoming calendar page. Users can view ~~all Godfather movies~~ the top rated movies on TMDB.
 
 ### Features.
 
@@ -33,6 +33,7 @@ This is the movie app
 # Styling changes
 + Montserrat font added all over the web app, in some cases using ThemeProvider and others directly in the elements
 + Changed the arrow colours from primary to color:"#0d253f"
++ Use of semantic UI react in different pages
 ## Site header:
 - Updated the colour to match TMDB's theme colours.
 - Added the TMDB logo on the left side, and linked it to the home page.
@@ -54,9 +55,7 @@ This is the movie app
 # New features in existing pages
 ## Site header
 - Changed the link to the movie homepage from the house icon to the title of the movie
-<a href="/" style={{ marginRight: '20px', textDecoration: 'none' }}>
-              <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" width="200" height="auto" alt="logo" />
-            </a>
+`<a href="/" style={{ textDecoration: 'none' }}>     </a>`
 ## Filter Card
 ### New filters
 #### Year filter:
@@ -91,9 +90,9 @@ This is the movie app
 ## Homepage
 ### Hero Image Randomizer:
 - Displays a different background image each time.
-- const randomIndex = Math.floor(Math.random() * movies.length);
+- `const randomIndex = Math.floor(Math.random() * movies.length);`
 - Generates a random index within the range of the movie list's length. This index is used to select a random movie from the list.
-- const heroMovie = movies[randomIndex];
+- `const heroMovie = movies[randomIndex];`
     - Retrieves the movie object from the list using the randomly generated index.
     - The URL of the backdrop image is obtained from the backdrop_path property of the heroMovie object.
 
@@ -107,13 +106,13 @@ This is the movie app
 - Visually represent the audience score percentage of each movie on the movie card.
 - The percentage is calculated based on the movie's vote_average * 10 and then add a % symbol
 - The stroke color of the circle dynamically changes based on the percentage range. Under 60 shows red, between 60 and 73 is yellow and under 60 is red.
-    -  if (percentage < 60) {
+   `if (percentage < 60) {
     strokeColor = '#B2042F'; //green
   } else if (percentage >= 60 && percentage <= 73) {
     strokeColor = '#EDD300'; //yellow
   } else {
     strokeColor = '#90cea1'; //red
-  }
+  }`
 
 
 # Setup requirements.
@@ -126,7 +125,7 @@ This is the movie app
 
 ### Homepage
 + **Hero Image** - https://image.tmdb.org/t/p/original${heroMovie.backdrop_path}
-- More information: https://developer.themoviedb.org/docs/image-basics
+    -- More information: https://developer.themoviedb.org/docs/image-basics
 
 ### Movie details
 
