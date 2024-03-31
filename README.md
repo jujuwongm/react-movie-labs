@@ -10,8 +10,8 @@ npm install - npm start - npm install semantic-ui-css semantic-ui-react
 
 # Assignment 1 - ReactJS app.
 
-Name: Juliana Wong Mendonca
-Student Number: 20095922
+-Name: Juliana Wong Mendonca
+-Student Number: 20095922
 
 ## Overview.
 This is the movie app 
@@ -52,8 +52,11 @@ This is the movie app
 - Hero image + Hero text
 
 # New features in existing pages
-## Movie header
+## Site header
 - Changed the link to the movie homepage from the house icon to the title of the movie
+<a href="/" style={{ marginRight: '20px', textDecoration: 'none' }}>
+              <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" width="200" height="auto" alt="logo" />
+            </a>
 ## Filter Card
 ### New filters
 #### Year filter:
@@ -61,11 +64,13 @@ This is the movie app
 - Implemented using a TextField component where users can input a release year.
 - The input value triggers the handleYearChange function, updating the state with the new year filter value.
 - The TextField restricts input to numbers only and sets a maximum length of 4 digits.
+
 #### Rating filter:
 - Enables users to filter movies by a minimum rating.
 - Another TextField component is added for users to input the minimum rating.
 - The handleRatingChange function verifies the input, then updates the state with the new rating filter value.
 - Input is restricted to numbers only, with a maximum length of 1 character to allow ratings from 0 to 9.
+
 
 ## Movie Details
 ### Cast and Crew:
@@ -85,9 +90,9 @@ This is the movie app
 
 ## Homepage
 ### Hero Image Randomizer:
-    - Displays a different background image each time.
+- Displays a different background image each time.
 - const randomIndex = Math.floor(Math.random() * movies.length);
-    - Generates a random index within the range of the movie list's length. This index is used to select a random movie from the list.
+- Generates a random index within the range of the movie list's length. This index is used to select a random movie from the list.
 - const heroMovie = movies[randomIndex];
     - Retrieves the movie object from the list using the randomly generated index.
     - The URL of the backdrop image is obtained from the backdrop_path property of the heroMovie object.
@@ -102,7 +107,7 @@ This is the movie app
 - Visually represent the audience score percentage of each movie on the movie card.
 - The percentage is calculated based on the movie's vote_average * 10 and then add a % symbol
 - The stroke color of the circle dynamically changes based on the percentage range. Under 60 shows red, between 60 and 73 is yellow and under 60 is red.
->    if (percentage < 60) {
+    -  if (percentage < 60) {
     strokeColor = '#B2042F'; //green
   } else if (percentage >= 60 && percentage <= 73) {
     strokeColor = '#EDD300'; //yellow
@@ -121,56 +126,58 @@ This is the movie app
 
 ### Homepage
 + **Hero Image** - https://image.tmdb.org/t/p/original${heroMovie.backdrop_path}
-More information: https://developer.themoviedb.org/docs/image-basics
+--- More information: https://developer.themoviedb.org/docs/image-basics
 
 ### Movie details
 
- **Cast** 
+- **Cast** 
  https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}
- **Crew** 
+ - **Crew** 
 https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY} 
 + *Images* 
 https://image.tmdb.org/t/p/w200${person.profile_path}
 > Despite coming from the same endpoint, I found it easier to fetch the endpoint twice, since in the database itself, the cast and crew are store in different collections. In this image, you can see how they are stored: https://imgur.com/a/h8ksp4l 
 
- **Recommendations** - https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}
+ - **Recommendations** 
+  https://api.themoviedb.org/3/movie/${movie.id}/recommendations?language=en-US&api_key=${process.env.REACT_APP_TMDB_KEY}
 + *Images*
 https://image.tmdb.org/t/p/w200${recommendation.poster_path}
 
 
 ### Now playing
-    (Inaccurate) List of movies that are currently in theatres
+- (Inaccurate) List of movies that are currently in theatres
 https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1
 
 ## Upcoming
-    (Inaccurate) List of movies that are being released soon.
+- (Inaccurate) List of movies that are being released soon.
 https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1&sort_by=release_date.asc
 
 
 ## Top Rated
-    List of movie ordered by vote count average 
+- List of movie ordered by vote count average 
 https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1&sort_by=vote_average.desc
 
 ## Routing.
 
-**Now Playing in Cinemas**
- path="/movies/playing"  - Movies currently in the cinemas
- **Upcoming movies page with posters**
-path="/movies/upcoming"  Movies being released soon 
-**Upcoming movies calendar**
- path="/movies/calendar" - Calendar of Upcoming movies grouped by year and month
- **Top Rated**
++ **Now Playing in Cinemas**
+    path="/movies/playing"  - Movies currently in the cinemas
+ + **Upcoming movies page with posters**
+    path="/movies/upcoming"  Movies being released soon 
++ **Upcoming movies calendar**
+    path="/movies/calendar" - Calendar of Upcoming movies grouped by year and month
++  **Top Rated**
 path="/movies/toprated" - Top rated by users movies 
 
 ## Independent learning (If relevant).
 
-https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
-https://www.javatpoint.com/random-image-generator-in-javascript
-https://www.youtube.com/watch?v=Ynp6Gdd3XVE&ab_channel=JamesQQuick
-https://react.semantic-ui.com/
-https://www.shecodes.io/athena/67661-how-to-change-background-color-based-on-time-of-day-with-javascript (color changing based on features)
+- https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
+- https://www.javatpoint.com/random-image-generator-in-javascript
+- https://www.youtube.com/watch?v=Ynp6Gdd3XVE&ab_channel=JamesQQuick
+- https://react.semantic-ui.com/
+- https://www.shecodes.io/athena/67661-how-to-change-background-color-based-on-time-of-day-with-javascript (color changing based on features)
 
-Upcoming movie calendar page: 
-https://www.w3schools.com/jsref/jsref_getfullyear.asp
-https://www.w3schools.com/jsref/jsref_getmonth.asp
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce - accumulator object 
+
++ Upcoming movie calendar page: 
+- https://www.w3schools.com/jsref/jsref_getfullyear.asp
+- https://www.w3schools.com/jsref/jsref_getmonth.asp
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce - accumulator object 
