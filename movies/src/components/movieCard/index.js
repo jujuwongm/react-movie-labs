@@ -49,7 +49,7 @@ export default function MovieCard({ movie, action }) {
   let strokeColor;
   if (percentage < 60) {
     strokeColor = '#B2042F'; //green
-  } else if (percentage >= 60 && percentage <= 70) {
+  } else if (percentage >= 60 && percentage <= 73) {
     strokeColor = '#EDD300'; //yellow
   } else {
     strokeColor = '#90cea1'; //red
