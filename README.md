@@ -10,8 +10,8 @@ npm install - npm start - npm install semantic-ui-css semantic-ui-react
 
 # Assignment 1 - ReactJS app.
 
--Name: Juliana Wong Mendonca
--Student Number: 20095922
+- Name: Juliana Wong Mendonca
+- Student Number: 20095922
 
 ## Overview.
 This is the movie app 
@@ -117,16 +117,16 @@ This is the movie app
 
 
 # Setup requirements.
-- npm install 
-- npm start 
-- npm install semantic-ui-css semantic-ui-react
+-   npm install 
+-   npm start 
+-   npm install semantic-ui-css semantic-ui-react
 
 
 # API endpoints.
 
 ### Homepage
 + **Hero Image** - https://image.tmdb.org/t/p/original${heroMovie.backdrop_path}
---- More information: https://developer.themoviedb.org/docs/image-basics
+- More information: https://developer.themoviedb.org/docs/image-basics
 
 ### Movie details
 
