@@ -1,13 +1,3 @@
-Ideas:
-Change fonts all over 
-Create logo and add it to the top and to the filter card
-adjust the favourite logo 
-create a watchlist 
-add credits with photos to movie pages
-create a hero image that slides with photos of different movies - directs to movie pages
-
-npm install - npm start - npm install semantic-ui-css semantic-ui-react
-
 # Assignment 1 - ReactJS app.
 
 - Name: Juliana Wong Mendonca
