@@ -23,12 +23,12 @@ This is the movie app
 + Now playing movies page - Using the Movielist template
 + Top Rated movies page - Using the Movielist template
 + Upcoming movies calendar
-# A page that shows upcoming movies in chronological ascending order grouped by year and month. (Important to keep in mind that unfortunately TMDB upcoming endpoint has an inaccurate list of movies that are coming out, hence the separation by year)
-## Features:
-- Link to Movie Details: The movie details button is a link that redirects to a page with more information about the movie.
-    # The page fetches upcoming movies from an API using the getUpcomingMovies function. Using the same variable from the Upcoming movies page
-    # Semantic UI's segment, button and container
-    # Grouping the movies by year and month - The accumulator variable is used in the reduce method to group upcoming movies by their release year and month
+- A page that shows upcoming movies in chronological ascending order grouped by year and month. (Important to keep in mind that unfortunately TMDB upcoming endpoint has an inaccurate list of movies that are coming out, hence the separation by year)
+-- **Features:**
+--- Link to Movie Details: The semantic ui movie details button is a link that redirects to a page with more information about the movie.
+    - The page fetches upcoming movies from an API using the getUpcomingMovies function. Using the same variable from the Upcoming movies page
+    - Semantic UI's segment, button and container
+    - Grouping the movies by year and month - The accumulator variable is used in the reduce method to group upcoming movies by their release year and month
 
 # Styling changes
 + Montserrat font added all over the web app, in some cases using ThemeProvider and others directly in the elements
