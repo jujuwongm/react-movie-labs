@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Button, Grid, Container } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 
 // Create a theme with Montserrat font
 const theme = createTheme({
@@ -31,20 +31,29 @@ const UpcomingMoviesCalendar = () => {
   }, []);
 
   // Organize movies by release year and month
-  const moviesByYearAndMonth = upcomingMovies.reduce((acc, movie) => {
-    const releaseYear = new Date(movie.release_date).getFullYear();
-    const releaseMonth = new Date(movie.release_date).getMonth();
-    // Group movies by release year and month
-    acc[releaseYear] = acc[releaseYear] || {};
-    acc[releaseYear][releaseMonth] = [...(acc[releaseYear][releaseMonth] || []), movie];
-    return acc;
-  }, {});
+  // Using the reduce method to group upcoming movies by their release year and month
+const moviesByYearAndMonth = upcomingMovies.reduce((accumulator, movie) => {
+  // Extracting the release year and month from the movie's release date
+  const releaseYear = new Date(movie.release_date).getFullYear();
+  const releaseMonth = new Date(movie.release_date).getMonth();
+
+  // Grouping movies by release year and month
+  // Initializing the accumulator object 
+  accumulator[releaseYear] = accumulator[releaseYear] || {};
+  // Initializing the array for the release month 
+  // and adding the current movie to it
+  accumulator[releaseYear][releaseMonth] = [...(accumulator[releaseYear][releaseMonth] || []), movie];
+
+  // Returning the accumulator object for the next iteration
+  return accumulator;
+}, {});
+
+// The moviesByYearAndMonth object now contains upcoming movies grouped by their release year and month
 
   // Sort years in ascending order
   const sortedYears = Object.keys(moviesByYearAndMonth).sort((a, b) => a - b);
 
   return (
-    // Apply theme with Montserrat font
     <ThemeProvider theme={theme}>
       <Container style={{ fontFamily: 'Montserrat' }}>
         {/* Display title */}
@@ -57,7 +66,7 @@ const UpcomingMoviesCalendar = () => {
             <div className="ui segments">
               {Object.keys(moviesByYearAndMonth[year]).map((month) => (
                 <div key={month} className="ui segment" style={{ marginBottom: "10px" }}>
-                  <p className="text-base font-semibold mb-2">{new Date(0, month).toLocaleString('default', { month: 'long' })}</p>
+                  <p className="text-base font-bold mb-2">{new Date(0, month).toLocaleString('default', { month: 'long' })}</p>
                   {/* Render movies for this month */}
                   {moviesByYearAndMonth[year][month].map((movie) => (
                     <div key={movie.id} className="mb-2">

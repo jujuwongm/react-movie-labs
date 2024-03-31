@@ -125,6 +125,7 @@ const handleRatingChange = (e) => {
           variant="filled"
           value={props.yearFilter}
           onChange={handleYearChange}
+          inputProps={{ maxLength: 4 }} // Input limit is 4 digits
         />
 
         {/* New TextField for rating filter */}

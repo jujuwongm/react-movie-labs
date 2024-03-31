@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import NavigationIcon from "@mui/icons-material/Navigation";
@@ -13,6 +12,9 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; // Import Cal
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import XIcon from '@mui/icons-material/X';
+import { Container } from "@mui/material";
+
 
  //Changes and additions: Font montserrat all over, Cast - name, character name in bold, Crew - name, job in bold, Recommendations with poster - clicking on the poster or the name leads to a movie page within the app 
 
@@ -87,6 +89,13 @@ const MovieDetails = ({ movie }) => {
   
     fetchCredits();
   }, [movie.id]);
+  const handleTwitterShare = () => {
+    const tmdbLink = `https://www.themoviedb.org/movie/${movie.id}`;
+    const tweetMessage = `I'm kinda obsessed with ${movie.title}❤️✨📽🎞 Check it out at ${tmdbLink}`;
+    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetMessage)}`;
+    window.open(shareUrl, '_blank');
+  };
+  
   
 
   return (
@@ -100,7 +109,7 @@ const MovieDetails = ({ movie }) => {
 </Typography>
 
 
-      <Paper 
+      <Container 
         component="ul" 
         sx={{...root}}
       >
@@ -110,8 +119,8 @@ const MovieDetails = ({ movie }) => {
             <Chip label={g.name} sx={{...chip}} />
           </li>
         ))}
-      </Paper>
-      <Paper component="ul" sx={{...root}}>
+      </Container>
+      <Container component="ul" sx={{...root, marginTop: "-1"}}>
         <Chip icon={<AccessTimeIcon style={{ color: '#0d253f' }} />} label={`${movie.runtime} min.`} />
         <Chip
           icon={<MonetizationIcon style={{ color: '#0d253f' }} />}
@@ -122,8 +131,20 @@ const MovieDetails = ({ movie }) => {
           label={`${movie.vote_average} (${movie.vote_count})`}
         />
   <Chip icon={<CalendarTodayIcon style={{ color: '#0d253f' }} />} label={`Released: ${movie.release_date}`} /> {/* Add CalendarTodayIcon */}
-      </Paper>
-
+      </Container>
+      <Fab
+         style={{ backgroundColor: 'black', color: 'white' }}
+        variant="extended"
+        onClick={handleTwitterShare}
+        sx={{
+          position: 'fixed',
+          bottom: '1em',
+          left: '2em'
+        }}
+      >
+        Share on 
+        <XIcon />
+      </Fab>
 
 
       {/* CAST PICTURES, CHARACTER NAMES AND ACTOR NAMES*/}
@@ -140,7 +161,7 @@ const MovieDetails = ({ movie }) => {
           )
         ))}
       </div>
-
+{/* CREW */}
       <Typography  variant="h5" component="h3" sx={{ fontWeight: 500 }}>Crew </Typography>
       <div style={{margin: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {crew.map((person) => (

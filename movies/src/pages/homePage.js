@@ -44,10 +44,10 @@ const HomePage = () => {
   return (
     <ThemeProvider theme={theme}>
       {/* Hero Image */}
-      <div className="hero-image" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`, height: '80vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+      <div style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`, height: '80vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
     {/* Hero Movie Title */}
-      <h3 className="hero-title" style={{fontFamily: 'montserrat', paddingTop: '30vh', margin:'-10px' ,textAlign: 'center', fontSize: '7vh', color: 'white', fontWeight: '400'}}> A movie recommendation for you: </h3>
-        <h1 className="hero-title" style={{ margin:'-10px' ,textAlign: 'center',fontFamily: 'montserrat', fontSize: '17vh', color: 'white'}}> {heroMovie.title}</h1>
+      <h3 style={{fontFamily: 'montserrat', paddingTop: '30vh', margin:'-10px' ,textAlign: 'center', fontSize: '7vh', color: 'white', fontWeight: '400'}}> A movie recommendation for you: </h3>
+        <h1 style={{ margin:'-10px' ,textAlign: 'center',fontFamily: 'montserrat', fontSize: '15vh', color: 'white'}}> {heroMovie.title}</h1>
       </div>
 
       {/* Movie List */}
