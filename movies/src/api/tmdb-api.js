@@ -115,6 +115,32 @@ export const getMovie = (args) => {
       .catch((error) => {
         throw error;
       })
-      
     };
 
+    export const top_rated_actors = () => {
+      return fetch(`https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(response.json().message);
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            throw error;
+          });
+    };
+    
+    export const getActor = (args) => {
+      const [, { id }] = args.queryKey;
+      return fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&append_to_response=movie_credits`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.json().message);
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          throw error;
+        });
+    };
+    

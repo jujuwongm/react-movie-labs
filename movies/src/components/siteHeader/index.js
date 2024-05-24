@@ -13,9 +13,6 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// Changed font to montserrat, background colour changed, TMDB logo added and linked to main page
-// New pages added - upcoming, now playing, calendar, top rated
-
 const themes = createTheme({
   typography: {
     fontFamily: [
@@ -43,6 +40,7 @@ const SiteHeader = ({ history }) => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Top Rated", path: "/movies/toprated" },
     { label: "Calendar", path: "/movies/calendar" },
+    { label: "Actors", path: "/actors" },  // New Actors menu option
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -58,7 +56,6 @@ const SiteHeader = ({ history }) => {
       <>
         <AppBar style={{ background:'#0d253f', position:'fixed' }}>
           <Toolbar>
-           
             <a href="/" style={{ marginRight: '20px', textDecoration: 'none' }}>
               <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" width="200" height="auto" alt="logo" />
             </a>
